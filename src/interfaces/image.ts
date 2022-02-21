@@ -1,6 +1,6 @@
 import { Document } from 'mongoose'
 
-export default interface IImage extends Document {
+export default interface IImage {
     url: string;
     name: string;
 }

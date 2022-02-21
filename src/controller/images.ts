@@ -1,5 +1,30 @@
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 import Image from '../models/image'
+
+const saveImages = (req: Request, res: Response) => {
+    let {url, name} = req.body;
+    const image = new Image({
+      _id: new mongoose.Types.ObjectId,
+      url,
+      name
+    });
+
+    return image.save()
+    .then(result => {
+        return res.status(201).json({
+            image: result
+        });
+    })
+    .catch(error => {
+        return res.status(500).json({
+            message: error.message,
+            error
+        })
+    })
+}
+
+
 const getAllImages = (req: Request, res: Response) => {
     Image.find()
     .then(results => {
@@ -16,4 +41,4 @@ const getAllImages = (req: Request, res: Response) => {
     })
 }
 
-export default {getAllImages}
+export default {getAllImages, saveImages}
