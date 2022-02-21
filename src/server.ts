@@ -10,7 +10,7 @@ import 'express-async-errors';
 import apiRouter from './routes/api';
 import logger from 'jet-logger';
 import { CustomError } from '@shared/errors';
-
+import mongoose from 'mongoose';
 
 // Constants
 const app = express();
@@ -24,6 +24,22 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
+
+
+mongoose.connect("mongodb+srv://jvargas:cfSNBxtflvARkF8U@mongodbserver.36qg1.mongodb.net/contacts_list?retryWrites=true&w=majority")
+.then(result => {
+    console.log("klk")
+})
+.catch(error => {console.log(error.message)})
+//handle error
+let mongoDB = mongoose.connection;
+mongoDB.on("error", console.error.bind(console, "Connection Error:"));
+mongoDB.once("open", () => {
+  console.log("Connected to MongoDB..");
+});
+
+
+
 
 // Show routes called in console during development
 if (process.env.NODE_ENV === 'development') {
