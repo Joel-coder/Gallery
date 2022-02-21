@@ -1,15 +1,14 @@
-import { Schema, model, connect } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
+import IImage from '../interfaces/image'
 
-export interface IImage {
-    url: string;
-    name: string;
-}
 
-const imageSchema = new Schema<IImage>(
+const imageSchema = new Schema(
     {
-    url: { type: String, required: true },
-    name: { type: String, required: true }})
-
-module.exports = model<IImage>("Contact_Info",  imageSchema);
-
+         url: { type: String, required: true },
+         name: { type: String, required: true }},
+    {
+        timestamps: true 
+    }
+    )
+export default mongoose.model<IImage>('image', imageSchema)
 //db.contact_info.find()
