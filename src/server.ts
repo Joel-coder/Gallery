@@ -17,6 +17,16 @@ const app = express();
 
 
 /***********************************************************************************
+ *                                  Database
+ **********************************************************************************/
+
+mongoose.connect(process.env.DB || "")
+.then(result => {
+    console.log("successfull")
+})
+.catch(error => {console.log(error.message)})
+
+/***********************************************************************************
  *                                  Middlewares
  **********************************************************************************/
 
@@ -26,17 +36,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 
-mongoose.connect("mongodb+srv://jvargas:cfSNBxtflvARkF8U@mongodbserver.36qg1.mongodb.net/contacts_list?retryWrites=true&w=majority")
-.then(result => {
-    console.log("klk")
-})
-.catch(error => {console.log(error.message)})
+
 //handle error
-let mongoDB = mongoose.connection;
-mongoDB.on("error", console.error.bind(console, "Connection Error:"));
-mongoDB.once("open", () => {
-  console.log("Connected to MongoDB..");
-});
 
 
 
