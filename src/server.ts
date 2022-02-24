@@ -2,16 +2,16 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import path from 'path';
 import helmet from 'helmet';
-
 import express, { NextFunction, Request, Response } from 'express';
 import StatusCodes from 'http-status-codes';
 import 'express-async-errors';
-
 import apiRouter from './routes/api';
 import logger from 'jet-logger';
 import { CustomError } from '@shared/errors';
+import cors from "cors";
 import mongoose from 'mongoose';
-
+import passport from "passport";
+import strategy from "./config/passport"
 // Constants
 const app = express();
 
@@ -34,7 +34,9 @@ mongoose.connect(process.env.DB || "")
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
-
+app.use(cors());
+app.use(passport.initialize());
+passport.use(strategy);
 
 
 //handle error
