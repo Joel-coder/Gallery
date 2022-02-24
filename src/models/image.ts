@@ -9,6 +9,6 @@ const imageSchema = new Schema(
     {
         timestamps: true 
     }
-    )
+    )  
 export default mongoose.model<IImage>('image', imageSchema)
 //db.contact_info.find()
