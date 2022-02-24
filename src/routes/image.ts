@@ -1,4 +1,3 @@
-let ImageSchema = require("../models/image");
 import { Request, Response, Router } from 'express';
 import controller from '../controller/images';
 
