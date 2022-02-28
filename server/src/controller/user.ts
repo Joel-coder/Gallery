@@ -9,19 +9,24 @@ const createToken =(user:IUser) =>
 }
 
 const signUp = async (req: Request,res: Response): Promise<Response> => 
-{
-    if (!req.body.email || !req.body.password) {
+{   const user = 
+    {
+    email:  req.body.email,
+    password: hashSync(req.body.password, 10)
+    }
+
+    if (!user.email || !user.password) {
       return res
         .status(400)
         .json({ msg: "Please. Send your email and password" });
     }
   
-    const user = await User.findOne({ email: req.body.email });
-    if (user) {
+    const isEmail = await User.findOne({ email: req.body.email });
+    if (isEmail) {
       return res.status(400).json({ msg: "The User already Exists" });
     }
-  
-    const newUser = new User(req.body);
+   
+    const newUser = new User(user);
     await newUser.save();
     return res.status(201).json(newUser);
   };
@@ -39,7 +44,7 @@ const signUp = async (req: Request,res: Response): Promise<Response> =>
       return res.status(400).json({ msg: "The User does not exists" });
     }
   
-    const isMatch = await compareSync(req.body.password, user.password);
+    const isMatch = compareSync(req.body.password, user.password);
     if (isMatch) {
       return res.status(400).json({ token: createToken(user) });
     }
