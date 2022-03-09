@@ -2,8 +2,10 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 import Image from '../models/image'
 
+//https://www.youtube.com/watch?v=srPXMt1Q0nY
 const saveImages = (req: Request, res: Response) => {
     let {url, name} = req.body;
+    console.log(url);
     const image = new Image({
       _id: new mongoose.Types.ObjectId,
       url,

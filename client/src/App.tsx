@@ -6,14 +6,14 @@ import { useState, useEffect } from 'react';
 function App() {
   const [file, setFile] = useState(undefined);
   
-  const handleFile = async(e : any) : Promise<any> => 
+  const handleFile = async(e : any) : Promise<void> => 
   {
     let image = await e.target.files[0];
     setFile(image);
     console.log(e.target.files[0]);
   };
 
-  const handleUpload = async () : Promise<any> => 
+  const handleUpload = async () : Promise<void> => 
   {
     const formData = new FormData();
     if (file) {
@@ -25,6 +25,12 @@ function App() {
             "Content-Type": "multipart/form-data",
       }
       })
+      .then((response) => {
+        console.log("response upload: ", response.data);
+      })
+      .catch((e) => {
+        console.log("Error is: ", e);
+      });
     }
   }
 
